@@ -153,8 +153,42 @@ var svg = d3.select("#scatterplot").append("svg")
             d[xVal] = +d[xVal];
             d[yVal] = +d[yVal];
         });
-
-
+data.sort(function(a,b){
+            return d3.ascending(a.x, b.x);
+        });
+        var line = d3.line() //borrowed from https://bl.ocks.org/mbostock/3883245 
+         .x(function(d) { return x(d[xVal]); })
+            .y(function(d) { return y(d[yVal]); });
+        //Scale the range again I think 
+        x.domain(d3.extent(data, function(d) {return d[xVal];}));
+        y.domain([0, d3.max(data, function(d) {return d[yVal];})]);
+        // borrowed from https://bl.ocks.org/d3noob/402dd382a51a4f6eea487f9a35566de0
+        svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .attr("d", valueline);
+        // Add the x and y axis again
+         // Add the X Axis
+    svg.append("g")
+        .attr("transform", "translate(0, " + height + ")")
+        .call(d3.axisBottom(x));
+    
+    // Add the Y Axis
+    svg.append("g")
+        .call(d3.axisLeft(y));
+    // Add text labels again 
+         var xLabel = part34.append("text")
+            .attr("class", "label")
+            .text(xVal)
+            .attr("x", width - 20)
+            .attr("y", height - 10);
+        var yLabel = part3_4.append("text")
+            .attr("class", "label")
+            .text(yVal)
+            .attr("y", -10)
+            .attr("transform", "rotate(90)")
+            .style("text-anchor", "start");
+        
     // Put your part five code here ***********************
           
             var svg = d3.select("#pointsSVG").append("svg")
