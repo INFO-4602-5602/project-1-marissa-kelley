@@ -196,7 +196,68 @@ data.sort(function(a,b){
     .attr("height", height + margin.top + margin.bottom)
     .append("g") //allows the svg to be transformed with the code below 
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    //borrowed from https://bl.ocks.org/alansmithy/4a863fed88f346e89921454dae3ab8f9    
+    $("#scatterplotSet").append("<div id='tophalf'></div>").append("<div id='bottomhalf'></div>");
+    var chart1 = d3.select("#tophalf").append("svg")
+        .attr("width",  width + margin.left + margin.right)
+        .attr("height", height+ margin.top  + margin.bottom)
+        .append("g")
+        .attr("transform", "translate("+margin.left + "," + margin.top + ")");
+    var chart2 = d3.select("#tophalf").append("svg")
+        .attr("width",  width + margin.left + margin.right)
+        .attr("height", height+ margin.top  + margin.bottom)
+        .append("g")
+        .attr("transform", "translate("+margin.left + "," + margin.top + ")");
+    var chart3 = d3.select("#tophalf").append("svg")
+        .attr("width",  width + margin.left + margin.right)
+        .attr("height", height+ margin.top  + margin.bottom)
+        .append("g")
+        .attr("transform", "translate("+margin.left + "," + margin.top + ")");
+    
+    // Not sure, but I think you scale the range of the data again
+            x.domain(d3.extent(data, function (d) {
+                return d[xVal];
+            }));
+            y.domain([0, d3.max(data, function (d) {
+                return d[yVal];
+            })]);
+            // Add the scatterplot points
+            chartNum.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("r", 5)
+                .attr("cx", function (d) {
+                    return x(d[xVal]);
+                })
+                .attr("cy", function (d) {
+                    return y(d[yVal]);
+                })
+                .attr("fill", "orange");
             
+            // Add the X Axis
+            svg.append("g")
+            .attr("transform", "translate(0, " + height + ")")
+            .call(d3.axisBottom(x));
+    
+            // Add the Y Axis
+            svg.append("g")
+            .call(d3.axisLeft(y));
+           
+        //Add text labels
+    var xLabel = svg.append("text")
+            .attr("class", "label")
+            .text(xVal)
+            .attr("x", width - 20)
+            .attr("y", height - 10);
+    
+     var yLabel = svg.append("text")
+            .attr("class", "label")
+            .text(yVal)
+            .attr("y", - 10)
+            .attr("transform", "rotate(90)")
+            .style("text-anchor", "start");
+    
     </script>
 </body>
 
