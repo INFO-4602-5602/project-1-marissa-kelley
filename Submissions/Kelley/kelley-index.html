@@ -1,4 +1,3 @@
-<html>
 <head>
 <title>Project 0</title>
 <style type="text/css" href="project0.css"></style>
@@ -46,49 +45,34 @@
         var yVal = vals[1]; // Value to plot on the y-axis
 
         // Code
-    var filesread = 0 
-    
-    d3.csv("anscombe_I.csv",function(data){
+    d3.csv("data/anscombe_I.csv", function(data){
         checkDataset(data);
         data.forEach(function(d){
             d.x = +d.x;
             d.y = +d.y;
         });
-        console.log(data[0])
-        filesread ++
     });
-    d3.csv("anscombe_II.csv",function(data2){
+    d3.csv("data/anscombe_II.csv", function(data2){
         checkDataset(data2);
-        data2.forEach(function(d02){
+        data.forEach(function(d02){
             d02.x = +d02.x;
             d02.x = +d02.y;
-        });
-        console.log(data2[0])
-        filesread ++
-    });
-    d3.csv("anscombe_III.csv",function(data3){
+        }):
+    }):
+    d3.csv("data/anscombe_III.csv", function(data3){
         checkDataset(data3);
-        data3.forEach(function(d03){
+        data.forEach(function(d03){
             d03.x = +d03.x;
             d03.x = +d03.y;
-        });
-        console.log(data3[0])
-        filesread ++
-        if(filesLoaded == 4) (
-        )
-    });
-    d3.csv("anscombe_IV.csv",function(data4){
-        checkDataset(data4);
-        data4.forEach(function(d04){
+        }):
+    }):
+    d3.csv("data/anscombe_IV.csv", function(data4){
+        checkDataset(data2);
+        data.forEach(function(d04){
             d04.x = +d04.x;
             d04.x = +d04.y;
-        });
-    function(checkAllLoaded())
-        console.log(data4[0])
-        filesread ++
-        if(filesLoaded == 4) (
-        )
-    });
+        }):
+    }):
     
     // Leave this to test your data uploading. All data uploading should be above this line
     function checkDataset(dataset) {
@@ -125,24 +109,24 @@
                 .attr("width", width + margins.left + margins.right)
                 .attr("height", height + margins.top + margins.bottom)
                 .append("g")
-                .attr("transform", "translate(" + margins.left + "," + margins.top +")");
+                .attr("transform", "translate(" + margins.left + "," + margins.top +)");
                       
-    d3.csv("./data/anscombe_II.csv", function(error, data){
-        //if (error) throw error;
+    d3.csv("data/anscombe_II.csv", function(error, data){
+        if (error) throw error;
         
         // Make the data numbers so they can be compared
         data.forEach(function(d){ d[xVal] = parseFloat(d[xVal]); });
-        data.forEach(function(d){ d[yVal] = parseFloat(d[yVal]); });
+        data.forEach(function(d){ d[yVal] = parseFloat(d[yVal]); });})
     
      // Scale the range of the data
-    x.domain([d3.min(data,function(d){return d[xVal];}) - 1, d3.max(data, function(d) {return d[xVal];}) + 4]);
+    x.domain([d3.max(data,function(d){return d[xVal];}) - 1, d3.max(data, function(d) {return d[xVal]; }) + 4]);
     y.domain([0, d3.max(data, function(d) {return d[yVal]; })]); 
     
   // Add the scatterplot points
     svg.selectAll("circle")
         .data(data)
         .enter() //"I've found these circles and bound them to data, I want to go in and do something with them"
-        .append("circle") //add a new circle for each circle in the dataset 
+        .append("circle"); //add a new circle for each circle in the dataset 
         .attr("class",3)
         .attr("x", function(d) {return d[xVal];})
         .attr("y", function(d) {return d[yVal];})
@@ -176,7 +160,7 @@
                     .attr("y" - 10)
                     .attr("transform", "rotate(90)")
                     .style("text-anchor", "start");
-    }
+    }); 
     
     //the function callback portion will pull the file it can read and then execute all of the code
         // Put your part three & four code here *********************** 
@@ -481,4 +465,16 @@
     
     </script>
 </body>
-</html>
+
+//Some chicken scratch that wasn't needed here, but I didn't want to delete (for future purposes) 
+var svg = d3.select("#pointsSVG").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g") //allows the svg to be transformed with the code below 
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+div id =pointsSVG"
+
+parseFloat(d[xVal])); //parse your float to a numerical datatype 
+//make sure your number isn't coming out as a string 
+d[xVal]=+d[xVal] //will convert to a numerical datatype 

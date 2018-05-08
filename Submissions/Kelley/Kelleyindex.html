@@ -48,7 +48,7 @@
         // Code
     var filesread = 0 
     
-    d3.csv("anscombe_I.csv",function(data){
+    d3.csv("data/anscombe_I.csv",function(data){
         checkDataset(data);
         data.forEach(function(d){
             d.x = +d.x;
@@ -57,7 +57,7 @@
         console.log(data[0])
         filesread ++
     });
-    d3.csv("anscombe_II.csv",function(data2){
+    d3.csv("data/anscombe_II.csv",function(data2){
         checkDataset(data2);
         data2.forEach(function(d02){
             d02.x = +d02.x;
@@ -66,7 +66,7 @@
         console.log(data2[0])
         filesread ++
     });
-    d3.csv("anscombe_III.csv",function(data3){
+    d3.csv("data/anscombe_III.csv",function(data3){
         checkDataset(data3);
         data3.forEach(function(d03){
             d03.x = +d03.x;
@@ -74,20 +74,14 @@
         });
         console.log(data3[0])
         filesread ++
-        if(filesLoaded == 4) (
-        )
+
     });
-    d3.csv("anscombe_IV.csv",function(data4){
+    d3.csv("data/anscombe_IV.csv",function(data4){
         checkDataset(data4);
         data4.forEach(function(d04){
             d04.x = +d04.x;
             d04.x = +d04.y;
         });
-    function(checkAllLoaded())
-        console.log(data4[0])
-        filesread ++
-        if(filesLoaded == 4) (
-        )
     });
     
     // Leave this to test your data uploading. All data uploading should be above this line
@@ -99,7 +93,18 @@
     }
     
         // Put your part two code here ***********************
-       //Scale the plot 
+       // 
+    var chart2 = d3.select("#partTwo").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top +")");
+    
+    // Get the data 
+    d3.csv("./data/anscombe_II.csv", function(error, data){
+    
+        
+        //Scale the plot 
         var w = 700; //Width of our visualization
         var h = 500; //Height of our visualization
         var xOffset = 40; //Space for x-axis labels
@@ -120,16 +125,7 @@
     var x_label = 0;
     var y_label = 0;
     
-    // 
-    var svg = d3.select("#partTwo").append("svg")
-                .attr("width", width + margins.left + margins.right)
-                .attr("height", height + margins.top + margins.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margins.left + "," + margins.top +")");
-                      
-    d3.csv("./data/anscombe_II.csv", function(error, data){
-        //if (error) throw error;
-        
+    
         // Make the data numbers so they can be compared
         data.forEach(function(d){ d[xVal] = parseFloat(d[xVal]); });
         data.forEach(function(d){ d[yVal] = parseFloat(d[yVal]); });
@@ -139,7 +135,7 @@
     y.domain([0, d3.max(data, function(d) {return d[yVal]; })]); 
     
   // Add the scatterplot points
-    svg.selectAll("circle")
+    chart2.selectAll("circle")
         .data(data)
         .enter() //"I've found these circles and bound them to data, I want to go in and do something with them"
         .append("circle") //add a new circle for each circle in the dataset 
@@ -148,20 +144,18 @@
         .attr("y", function(d) {return d[yVal];})
         .attr("cx",function(d){return x(d[xVal]);})
         .attr("cy",function(d){return y(d[yVal]);})
-        .on("mouseover", handleMouseOver)
-        .on("mouseout", handleMouseOut)
         .attr("fill", "orange") //the fill changes the color
         .transition()
         .ease(d3.easeBounce) //Pixar magic 
         .duration(10000)
 
   // Add the X Axis
-    svg.append("g")
+    chart2.append("g")
         .attr("transform","translate(0," + height + ")")
         .call(d3.axisBottom(x));
     
   // Add the Y Axis
-    svg.append("g")
+    chart2.append("g")
         .call(d3.axisLeft(y));
     
   // Add text labels
@@ -173,10 +167,10 @@
     var yLabel = svg.append("text")
                     .attr("class", "label")
                     .text(yVal)
-                    .attr("y" - 10)
+                    .attr("y", -10)
                     .attr("transform", "rotate(90)")
                     .style("text-anchor", "start");
-    }
+    });
     
     //the function callback portion will pull the file it can read and then execute all of the code
         // Put your part three & four code here *********************** 
@@ -194,8 +188,8 @@
     
         // set the dimensions and margins of the graph
         var margins = { top:20, right:20, bottom:30, left:50};
-        var width = w - margins.left - margins.right;
-        var height = h - margins.top - margins.bottom;
+        var width = w - margin.left - margin.right;
+        var height = h - margin.top - margin.bottom;
     
         // set the ranges
         var x = d3.scaleLinear().range([0, width]);
@@ -212,7 +206,7 @@
             .style("opacity", 0);
     
         //Get the data
-        d3.csv("data/anscombe_II.csv", function(error, data2){
+        d3.csv("data/anscombe_II.csv", function(error, data){
           if (error) throw error;
             
           data.forEach(function(d){ d[xVal] = parseFloat(d[xVal]); });
@@ -305,18 +299,20 @@
                  d.x=parseFloat(d.x);
                  d.y=parseFloat(d.y);
                });
+        var svg3 = d3.select("#partFive").append("svg")
+                    .attr("width", width + margins.left + margins.right)
+                    .attr("height", height + margins.top + margins.bottom)
+                    .append("g")        //The svg gets transformed
+                    .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
+        
            var margin={top:20, bottom:20,left:50,right:20};
-           var width = 300 - margin.left - margin.right;
-           var height= 300- margin.top - margin.bottom;
+           var width = 300 - margins.left - margins.right;
+           var height= 300- margins.top - margins.bottom;
            var x5 = d3.scaleLinear().range([0,width]);
            var y5 = d3.scaleLinear().range([height,0]);
            x5.domain([0,1 + d3.max(data,function(d)  {return d.x;})]);
            y5.domain([0,1 + d3.max(data,function(d) {return d.y})]);
-            var svg3 = d3.select("#partFive").append("svg")
-                    .attr("width", width1 + margins.left + margins.right)
-                    .attr("height", height1 + margins.top + margins.bottom)
-                    .append("g")        //The svg gets transformed
-                    .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
+            
              svg.selectAll("circle")
                    .data(data)
                    .enter()
@@ -339,7 +335,7 @@
                  //title
                  svg.append("text")
                     .attr("x",(width /2))
-                    .attr("y",0 - (margin-top /2))
+                    .attr("y",0 - (margin.top /2))
                     .attr("text-anchor","middle")
                     .style("font-size","15px")
                     .text("Anscombe I");
@@ -351,15 +347,15 @@
                d.y=parseFloat(d.y);
              });
              var margin={top:20, bottom:20,left:50,right:20};
-             var width = 300 - margin.left - margin.right;
-             var height= 300- margin.top - margin.bottom;
+             var width = 300 - margins.left - margins.right;
+             var height= 300- margins.top - margins.bottom;
              var x5 = d3.scaleLinear().range([0,width]);
              var y5 = d3.scaleLinear().range([height,0]);
          x5.domain([0,1 + d3.max(data,function(d)  {return d.x;})]);
          y5.domain([0,1 + d3.max(data,function(d) {return d.y})]);
           var svg3 = d3.select("#partFive").append("svg")
-                    .attr("width", width1 + margins.left + margins.right)
-                    .attr("height", height1 + margins.top + margins.bottom)
+                    .attr("width", width + margins.left + margins.right)
+                    .attr("height", height + margins.top + margins.bottom)
                     .append("g")   
                     .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
          svg.selectAll("circle")
@@ -386,7 +382,7 @@
                //title
                svg.append("text")
                   .attr("x",(width /2))
-                  .attr("y",0 - (margin-top /2))
+                  .attr("y",0 - (margin.top /2))
                   .attr("text-anchor","middle")
                   .style("font-size","12px")
                   .text("Anscombe II");
@@ -398,15 +394,15 @@
              d.y=parseFloat(d.y);
            });
            var margin={top:20, bottom:20,left:50,right:20};
-           var width = 300 - margin.left - margin.right;
-           var height= 300- margin.top - margin.bottom;
+           var width = 300 - margins.left - margins.right;
+           var height= 300- margins.top - margins.bottom;
            var x5 = d3.scaleLinear().range([0,width]);
            var y5 = d3.scaleLinear().range([height,0]);
        x5.domain([0,1 + d3.max(data,function(d)  {return d.x;})]);
        y5.domain([0,1 + d3.max(data,function(d) {return d.y})]);
          var svg3 = d3.select("#partFive").append("svg")
-                    .attr("width", width1 + margins.left + margins.right)
-                    .attr("height", height1 + margins.top + margins.bottom)
+                    .attr("width", width + margins.left + margins.right)
+                    .attr("height", height + margins.top + margins.bottom)
                     .append("g")        //allows the svg to be transformed w the code below
                     .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
        svg.selectAll("circle")
@@ -431,7 +427,7 @@
              //title
              svg.append("text")
                 .attr("x",(width /2))
-                .attr("y",0 - (margin-top /2))
+                .attr("y",0 - (margin.top /2))
                 .attr("text-anchor","middle")
                 .style("font-size","15px")
                 .text("Anscombe II");
@@ -443,15 +439,15 @@
            d.y=parseFloat(d.y);
          });
      var margin={top:20, bottom:20,left:50,right:20};
-     var width = 300 - margin.left - margin.right;
-     var height= 300- margin.top - margin.bottom;
+     var width = 300 - margins.left - margins.right;
+     var height= 300- margins.top - margins.bottom;
      var x5 = d3.scaleLinear().range([0,width]);
      var y5 = d3.scaleLinear().range([height,0]);
      x5.domain([0,1 + d3.max(data,function(d)  {return d.x;})]);
      y5.domain([0,1 + d3.max(data,function(d) {return d.y})]);
      var svg3 = d3.select("#partFive").append("svg")
-                    .attr("width", width1 + margins.left + margins.right)
-                    .attr("height", height1 + margins.top + margins.bottom)
+                    .attr("width", width + margins.left + margins.right)
+                    .attr("height", height + margins.top + margins.bottom)
                     .append("g")        //allows the svg to be transformed w the code below
                     .attr("transform", "translate(" + margins.left + "," + margins.top + ")");
        svg.selectAll("circle")
@@ -473,7 +469,7 @@
            .attr("stroke-width",2);
            svg.append("text")
               .attr("x",(width /2))
-              .attr("y",0 - (margin-top /2))
+              .attr("y",0 - (margin.top /2))
               .attr("text-anchor","middle")
               .style("font-size","15px")
               .text("Anscombe IV");
